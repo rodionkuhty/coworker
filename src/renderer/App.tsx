@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from "@renderer/components/ui/button"
 import { Input } from "@renderer/components/ui/input"
 import {WELCOME_MESSAGES} from "@renderer/constants";
+import {Messages} from "@renderer/components/messages/index.js";
+import {Loader} from "@renderer/icons/loader.js";
 
 // Define the electronAPI globally as exposed in preload.ts
 declare global {
@@ -77,10 +79,10 @@ const App = () => {
     <div className="app-container">
       <div id="chat-container" ref={chatContainerRef}>
         {messages.map((msg) => (
-          <div key={msg.id} className={`message ${msg.type}-message`}>
-            {formatMessage(msg.text)}
-          </div>
+          <Messages text={msg.text} type={msg.type} id={msg.id} key={msg.text}/>
         ))}
+        {isLoading && <Loader />}
+
       </div>
       <div id="input-container">
         <Input
