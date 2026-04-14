@@ -7,14 +7,13 @@
   "type": "module",
   "main": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:main && npm run build:renderer",
-    "build:main": "tsc",
+    "build": "npm run build:app && npm run build:renderer",
+    "build:app": "tsc -p src/app/tsconfig.node.json",
     "build:renderer": "vite build",
-    "watch": "tsc -w",
-    "start": "npm run start:electron",
-    "start:cli": "npm run build:main && node --env-file=.env dist/cli.js",
-    "start:electron": "npm run build && electron ."
+    "start:renderer": "vite",
+    "start": "npm run build:app && electron ./dist/app/main.js && vite",
+    "start:cli": "npm run build:app && node --env-file=.env dist/cli.js",
+    "start:electron": "npm run build && electron ./dist/app/main.js"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",

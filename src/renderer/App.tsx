@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Button } from "@renderer/components/ui/button"
+import { Input } from "@renderer/components/ui/input"
+import {WELCOME_MESSAGES} from "@renderer/constants";
 
 // Define the electronAPI globally as exposed in preload.ts
 declare global {
@@ -16,12 +19,15 @@ interface Message {
   id: number;
 }
 
+const welcomeMessage = (): string =>
+  WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)];
+
 const App = () => {
   const [messages, setMessages] = useState<Message[]>([
-    { text: 'Welcome to Coworker! How can I help you with your coding tasks today?', type: 'agent', id: 0 }
+    { text: welcomeMessage(), type: 'agent', id: 0 }
   ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,7 +68,7 @@ const App = () => {
   const formatMessage = (text: string) => {
     if (text.includes('```')) {
       const parts = text.split('```');
-      return parts.map((part, i) => i % 2 === 0 ? <span key={i}>{part}</span> : <pre key={i}>{part}</pre>);
+      return parts.map((part, i) => i % 2 === 0 ? <span className="bg-muted" key={i}>{part}</span> : <pre key={i}>{part}</pre>);
     }
     return text;
   };
@@ -77,9 +83,8 @@ const App = () => {
         ))}
       </div>
       <div id="input-container">
-        <input
+        <Input
           type="text"
-          id="user-input"
           placeholder="Type your message here..."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -87,9 +92,7 @@ const App = () => {
           autoFocus
           disabled={isLoading}
         />
-        <button id="send-button" onClick={handleSendMessage} disabled={isLoading || !inputValue.trim()}>
-          {isLoading ? '...' : 'Send'}
-        </button>
+        <Button  onClick={handleSendMessage} disabled={isLoading || !inputValue.trim()} variant="outline"> {isLoading ? '...' : 'Send'}</Button>
       </div>
     </div>
   );

@@ -5,15 +5,15 @@ import path from 'node:path';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  root: path.resolve(__dirname, 'src/renderer'),
+  root: path.resolve(__dirname, './src/renderer/'),
   base: './',
   build: {
-    outDir: path.resolve(__dirname, 'dist/renderer'),
+    outDir: path.resolve(__dirname, './dist/renderer'),
     emptyOutDir: true,
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src/renderer'),
+      '@renderer': path.resolve(__dirname, './src/renderer/'),
     },
   },
 });
