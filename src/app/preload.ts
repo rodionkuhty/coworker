@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('agent-update', listener);
     return () => ipcRenderer.removeListener('agent-update', listener);
   },
+  platform: process.platform,
 });

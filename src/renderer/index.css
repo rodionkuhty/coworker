@@ -6,7 +6,6 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    background-color: #f5f5f7;
 }
 
 .app-container {
@@ -34,30 +33,25 @@ body {
 
 .user-message {
     align-self: flex-end;
-    background-color: #007aff;
-    color: white;
+    background-color: var(--primary-foreground);
     border-bottom-right-radius: 4px;
 }
 
 .agent-message {
     align-self: flex-start;
-    background-color: #e9e9eb;
-    color: black;
+    background-color: var(--primary-foreground);
     border-bottom-left-radius: 4px;
 }
 
 .update-message {
     align-self: center;
     font-size: 0.8em;
-    color: #8e8e93;
     font-style: italic;
     background: none;
 }
 
 #input-container {
     padding: 20px;
-    background: white;
-    border-top: 1px solid #d1d1d6;
     display: flex;
     gap: 10px;
 }
@@ -65,32 +59,53 @@ body {
 #user-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #d1d1d6;
     border-radius: 20px;
     outline: none;
 }
 
 #send-button {
     padding: 10px 20px;
-    background: #007aff;
-    color: white;
+    background: var(--sidebar-foreground);
     border: none;
     border-radius: 20px;
     cursor: pointer;
 }
 
-#send-button:disabled {
-    background: #d1d1d6;
-}
-
 pre {
-    background-color: #f0f0f0;
     padding: 10px;
     border-radius: 8px;
     overflow-x: auto;
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
     font-size: 0.9em;
     margin: 5px 0;
+}
+
+.custom-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    /*background: #007aff;*/
+    /* Делаем область перетаскиваемой */
+    -webkit-app-region: drag;
+
+    /* Отступ слева под системные кнопки Mac */
+    /* Обычно 70-80px достаточно, чтобы не перекрыть "светофоры" */
+    padding-left: 75px;
+    padding-right: 10px;
+
+    /*background: #1e1e1e;*/
+    /*color: white;*/
+}
+
+/* Если приложение открыто на Windows, этот отступ не нужен */
+/* Можно определять платформу через window.process или preload */
+.is-windows .custom-header {
+    padding-left: 15px;
+}
+
+.no-drag {
+    -webkit-app-region: no-drag;
 }
 
 @theme inline {
@@ -203,6 +218,35 @@ pre {
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+}
+
+.ocean {
+    --background: oklch(0.97 0.02 220);
+    --foreground: oklch(0.22 0.03 220);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.22 0.03 220);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.22 0.03 220);
+    --primary: oklch(0.52 0.14 220);
+    --primary-foreground: oklch(0.98 0 0);
+    --secondary: oklch(0.9 0.03 220);
+    --secondary-foreground: oklch(0.22 0.03 220);
+    --muted: oklch(0.94 0.02 220);
+    --muted-foreground: oklch(0.48 0.03 220);
+    --accent: oklch(0.88 0.05 220);
+    --accent-foreground: oklch(0.22 0.03 220);
+    --destructive: oklch(0.62 0.2 25);
+    --border: oklch(0.86 0.03 220);
+    --input: oklch(0.86 0.03 220);
+    --ring: oklch(0.52 0.14 220);
+    --sidebar: oklch(0.99 0 0);
+    --sidebar-foreground: oklch(0.22 0.03 220);
+    --sidebar-primary: oklch(0.52 0.14 220);
+    --sidebar-primary-foreground: oklch(0.98 0 0);
+    --sidebar-accent: oklch(0.94 0.02 220);
+    --sidebar-accent-foreground: oklch(0.22 0.03 220);
+    --sidebar-border: oklch(0.86 0.03 220);
+    --sidebar-ring: oklch(0.52 0.14 220);
 }
 
 @layer base {
