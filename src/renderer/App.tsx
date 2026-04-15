@@ -4,6 +4,7 @@ import { Input } from "@renderer/components/ui/input"
 import {WELCOME_MESSAGES} from "@renderer/constants";
 import {Messages} from "@renderer/components/messages/index.js";
 import {Loader} from "@renderer/icons/loader.js";
+import {Header} from "@renderer/components/header/index.js";
 
 // Define the electronAPI globally as exposed in preload.ts
 declare global {
@@ -11,6 +12,7 @@ declare global {
     electronAPI: {
       sendMessage: (message: string) => Promise<string>;
       onUpdate: (callback: (update: string) => void) => () => void;
+      platform: 'aix' |'darwin' |'freebsd' |'linux' |'openbsd' |'sunos' | 'win32'
     };
   }
 }
@@ -77,6 +79,7 @@ const App = () => {
 
   return (
     <div className="app-container">
+      <Header/>
       <div id="chat-container" ref={chatContainerRef}>
         {messages.map((msg) => (
           <Messages text={msg.text} type={msg.type} id={msg.id} key={msg.text}/>
