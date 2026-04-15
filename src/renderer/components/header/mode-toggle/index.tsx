@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react"
+import { Monitor, Moon, Sun, Waves } from "lucide-react"
 
 import { Button } from "@renderer/components/ui/button"
 import {
@@ -9,8 +9,15 @@ import {
 } from "@renderer/components/ui/dropdown-menu"
 import { useTheme } from "@renderer/components/theme-provider"
 
+const themes = [
+  { value: "light", label: "Светлая", icon: Sun },
+  { value: "dark", label: "Тёмная", icon: Moon },
+  { value: "system", label: "Системная", icon: Monitor },
+  { value: "ocean", label: "Океан", icon: Waves },
+] as const
+
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   return (
     <DropdownMenu>
@@ -22,18 +29,21 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("ocean")}>
-          Ocean
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
+        {themes.map((item) => {
+          const Icon = item.icon
+
+          return (
+            <DropdownMenuItem key={item.value} onClick={() => setTheme(item.value)}>
+              <span className="flex w-full items-center justify-between gap-3">
+                <span className="flex items-center gap-2">
+                  <Icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </span>
+                {theme === item.value ? <span>✓</span> : null}
+              </span>
+            </DropdownMenuItem>
+          )
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   )
