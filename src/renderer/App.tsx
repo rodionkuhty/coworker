@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from "@renderer/components/ui/button"
 import { Input } from "@renderer/components/ui/input"
 import {WELCOME_MESSAGES} from "@renderer/constants";
-import {Messages} from "@renderer/components/messages/index.js";
-import {Loader} from "@renderer/icons/loader.js";
-import {Header} from "@renderer/components/header/index.js";
+import {Messages} from "@renderer/components/messages/index";
+import {Header} from "@renderer/components/header/index";
+import {Spinner} from "@renderer/components/ui/spinner";
 
 // Define the electronAPI globally as exposed in preload.ts
 declare global {
@@ -35,11 +35,11 @@ const App = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Scroll to bottom whenever messages change
+    // Scroll to bottom whenever messages change or loading state changes
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   useEffect(() => {
     // Handle updates (tool calls, etc.)
@@ -69,23 +69,19 @@ const App = () => {
     }
   };
 
-  const formatMessage = (text: string) => {
-    if (text.includes('```')) {
-      const parts = text.split('```');
-      return parts.map((part, i) => i % 2 === 0 ? <span className="bg-muted" key={i}>{part}</span> : <pre key={i}>{part}</pre>);
-    }
-    return text;
-  };
 
   return (
     <div className="app-container">
       <Header/>
       <div id="chat-container" ref={chatContainerRef}>
         {messages.map((msg) => (
-          <Messages text={msg.text} type={msg.type} id={msg.id} key={msg.text}/>
+          <Messages text={msg.text} type={msg.type} id={msg.id} key={msg.id}/>
         ))}
-        {isLoading && <Loader />}
-
+        {isLoading && (
+          <div className="flex justify-start p-4">
+            <Spinner />
+          </div>
+        )}
       </div>
       <div id="input-container">
         <Input
