@@ -10,7 +10,6 @@ type Props = {
 }
 
 export function Messages ({ text, type, id}: Readonly<Props>) {
-  console.log("ddd")
   return (
     <div className="flex flex-col">
       <div key={id} className={`message ${type}-message`}>
