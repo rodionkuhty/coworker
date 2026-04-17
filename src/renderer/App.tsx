@@ -5,6 +5,7 @@ import {WELCOME_MESSAGES} from "@renderer/constants";
 import {Messages} from "@renderer/components/messages/index";
 import {Header} from "@renderer/components/header/index";
 import {Spinner} from "@renderer/components/ui/spinner";
+import {MainInput} from "@renderer/components/main-input/main-input";
 
 // Define the electronAPI globally as exposed in preload.ts
 declare global {
@@ -83,17 +84,16 @@ const App = () => {
           </div>
         )}
       </div>
-      <div id="input-container">
-        <Input
-          type="text"
-          placeholder="Type your message here..."
+      <div id="input-container" className="flex items-center gap-2 p-4">
+        <MainInput
+          placeholder="@ for files/agents, / for commands, ! for shell"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
           autoFocus
           disabled={isLoading}
+          onSend={handleSendMessage}
         />
-        <Button  onClick={handleSendMessage} disabled={isLoading || !inputValue.trim()} variant="outline"> {isLoading ? '...' : 'Send'}</Button>
       </div>
     </div>
   );
